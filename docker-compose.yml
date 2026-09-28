@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: hr
+      POSTGRES_USER: hr
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Copy .env.example to .env first}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"   # localhost only, never exposed to the network
+    volumes:
+      - pgdata:/var/lib/postgresql                 # Postgres 18 images keep data under /var/lib/postgresql/18
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hr -d hr"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  hr-core:
+    build: ./hr-core
+    environment:
+      SPRING_PROFILES_ACTIVE: demo                  # loads the synthetic company on top of the schema
+      DB_URL: jdbc:postgresql://postgres:5432/hr
+      DB_USERNAME: hr
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:${HR_CORE_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,0 +1,21 @@
+# secrets
+.env
+
+# Java
+target/
+*.class
+
+# Python
+__pycache__/
+.venv/
+.pytest_cache/
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# private planning notes, kept local only
+docs/
+CLAUDE.md

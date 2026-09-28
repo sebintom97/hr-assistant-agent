@@ -1,0 +1,6 @@
+# "demo" profile: adds the synthetic company data on top of the schema.
+# docker-compose turns this on, so anyone who clones the repo gets a working demo.
+# A real deployment would simply not enable this profile.
+spring:
+  flyway:
+    locations: classpath:db/migration,classpath:db/seed
