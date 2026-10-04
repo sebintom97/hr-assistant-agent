@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
-    Optional<Employee> findByTenantIdAndId(UUID tenantId, UUID id);
+    Optional<Employee> findByTenantIdAndIdAndActiveTrue(UUID tenantId, UUID id);
     
 }

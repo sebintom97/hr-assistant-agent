@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.hrassistant.hrcore.employee.dto.EmployeeResponse;
@@ -18,8 +19,9 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    @Transactional(readOnly = true)
     public EmployeeResponse getEmployee(UUID tenantId, UUID id) {
-        Employee employee = employeeRepository.findByTenantIdAndId(tenantId, id)
+        Employee employee = employeeRepository.findByTenantIdAndIdAndActiveTrue(tenantId, id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Employee not found"));
 
         return new EmployeeResponse(
