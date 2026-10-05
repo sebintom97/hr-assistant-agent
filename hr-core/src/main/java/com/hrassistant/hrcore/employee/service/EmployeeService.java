@@ -10,6 +10,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.hrassistant.hrcore.employee.dto.EmployeeResponse;
 import com.hrassistant.hrcore.employee.repository.EmployeeRepository;
 import com.hrassistant.hrcore.employee.entity.Employee;
+import com.hrassistant.hrcore.common.security.CurrentUser;
+
 
 @Service
 public class EmployeeService {
@@ -35,5 +37,15 @@ public class EmployeeService {
         );
     }
 
+    @Transactional(readOnly= true)
+    public CurrentUser getCurrentUser(UUID employeeId){
+        Employee employee = employeeRepository.findByIdAndActiveTrue(employeeId)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unknown or inactive employee"));
+
+        return new CurrentUser(
+            employee.getId(),
+            employee.getTenantId()
+        );
+    }
 
 }
