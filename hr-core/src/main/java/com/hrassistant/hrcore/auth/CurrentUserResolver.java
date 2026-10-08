@@ -43,6 +43,6 @@ public class CurrentUserResolver implements HandlerMethodArgumentResolver {
         catch(IllegalArgumentException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"X-Employee-Id is not a valid UUID");
         }
-        return employeeService.getCurrentUser(employeeId);
+        return employeeService.identity(employeeId);
     }
 }

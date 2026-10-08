@@ -38,7 +38,7 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly= true)
-    public CurrentUser getCurrentUser(UUID employeeId){
+    public CurrentUser identity(UUID employeeId){
         Employee employee = employeeRepository.findByIdAndActiveTrue(employeeId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unknown or inactive employee"));
 
