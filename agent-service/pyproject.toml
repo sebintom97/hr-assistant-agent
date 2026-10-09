@@ -1,0 +1,20 @@
+[project]
+name = "agent-service"
+version = "0.1.0"
+description = "HR agent"
+readme = "README.md"
+authors = [
+    { name = "Sebin Tom Joseph", email = "99347950+sebintom97@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "anthropic>=1.12.1",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+agent-service = "agent_service:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"
