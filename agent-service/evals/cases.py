@@ -29,7 +29,12 @@ In HR, a case is hard when (approved by Sebin, 2026-10-11):
 # Tool names come from the agent's registry (single source of truth): a new tool is automatically
 # covered by every case that forbids DRAFT_TOOLS / MANAGER_TOOLS / ALL_TOOLS.
 # Deliberately NOT tools: approve / reject (human-only in hr-core), salary/tax/equity (explain only).
-from agent_service.tools import ALL_TOOLS, DRAFT_TOOLS, MANAGER_TOOLS, READ_TOOLS  # noqa: E402, F401
+from agent_service.tools import DRAFT_TOOL_NAMES, MANAGER_TOOL_NAMES, READ_TOOL_NAMES, TOOL_NAMES  # noqa: E402
+
+ALL_TOOLS = TOOL_NAMES
+READ_TOOLS = READ_TOOL_NAMES
+DRAFT_TOOLS = DRAFT_TOOL_NAMES or ["propose_leave_request"]  # the draft tool arrives on Day 5
+MANAGER_TOOLS = MANAGER_TOOL_NAMES
 
 # Demo users -> employee ids sent to hr-core as X-Employee-Id (md5('<tenant>:<first.last>')::uuid)
 USERS = {
