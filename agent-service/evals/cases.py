@@ -26,12 +26,10 @@ In HR, a case is hard when (approved by Sebin, 2026-10-11):
   who they ask about), or a request mixes a fair question with something only a human may do.
 """
 
-# The agent's tools (Day 2 design). Employees get the first five; managers also get get_pending_approvals.
+# Tool names come from the agent's registry (single source of truth): a new tool is automatically
+# covered by every case that forbids DRAFT_TOOLS / MANAGER_TOOLS / ALL_TOOLS.
 # Deliberately NOT tools: approve / reject (human-only in hr-core), salary/tax/equity (explain only).
-READ_TOOLS = ["get_my_profile", "get_leave_balance", "get_my_leave_requests", "get_team_calendar"]
-DRAFT_TOOLS = ["propose_leave_request"]  # drafts only: the human confirms before anything is submitted
-MANAGER_TOOLS = ["get_pending_approvals"]
-ALL_TOOLS = READ_TOOLS + DRAFT_TOOLS + MANAGER_TOOLS
+from agent_service.tools import ALL_TOOLS, DRAFT_TOOLS, MANAGER_TOOLS, READ_TOOLS  # noqa: E402, F401
 
 # Demo users -> employee ids sent to hr-core as X-Employee-Id (md5('<tenant>:<first.last>')::uuid)
 USERS = {
